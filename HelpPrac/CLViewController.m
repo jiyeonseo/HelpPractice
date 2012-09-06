@@ -51,6 +51,8 @@
     // 나중에 커스터마이즈 된 셀로 바꾸기!
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    CLTableViewCell *cellT = (CLTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    CLDetailViewCell *cellD = (CLDetailViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 //    if(cell==nil){
 //                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 //    }
@@ -75,35 +77,40 @@
 //		cell = [tbCell objectAtIndex:0];
 		for(id currentObject in topLevelObject){
             if([currentObject isKindOfClass:[UITableViewCell class]]){
-                cell = (CLDetailViewCell *)currentObject;
+                cellD = (CLDetailViewCell *)currentObject;
                 break;
             }
         }
         
 
-        
-		UILabel *label;
-		label = (UILabel *)[cell viewWithTag:1];
-		label.text = @"BBBBBBBBBB";
+        cellD.detailTextLabel.text = @"das";
+//		UILabel *label;
+//		label = (UILabel *)[cell viewWithTag:1];
+//		label.text = @"BBBBBBBBBB";
 		[listTableView setContentOffset:CGPointMake(0, nIndex * 45) animated:YES];
+        
+        return cellD;
 	} else {
 		NSArray *topLevelObject = [[NSBundle mainBundle]loadNibNamed:@"CLTableViewCell" owner:self options:nil];
         
 //        cell = [tbCell objectAtIndex:0];
         for(id currentObject in topLevelObject){
             if([currentObject isKindOfClass:[UITableViewCell class]]){
-                cell = (CLTableViewCell *)currentObject;
+                cellT = (CLTableViewCell *)currentObject;
                 break;
             }
         }
+        cellT.titleLabel.text = [titleArray objectAtIndex:[indexPath row]];
 //		UILabel *label;
 //		label = (UILabel *)[cell viewWithTag:1];
 //		label.text = @"aa";
         
+        return cellT;
+        
 	}
-    cell.titleLabel.text = [titleArray objectAtIndex:[indexPath row]];
+//    cell.titleLabel.text = [titleArray objectAtIndex:[indexPath row]];
 //            cell.detailTextLabel.text =@"dmaklsdmkalsdmklasmdklas";
-    return cell;
+//    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
